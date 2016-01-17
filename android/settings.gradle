@@ -1,0 +1,7 @@
+rootProject.name = 'ReactNativeCouchbaseLiteExample'
+
+include ':app'
+include ':react-native-couchbase-lite'
+include ':react-native-fs'
+project(':react-native-couchbase-lite').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-couchbase-lite/android')
+project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
