@@ -45,3 +45,8 @@ Here's the great part. The app is running a device database. When online, the da
 
 **Note**: For development purposes the app is configured to replicate currently from https://[   ]infinitelibrary.cloudant.com/gitburg/ to get the initial catalog. You must change that or ask us for the password to replicate from there. This means you'll have to add "infinitelibrary:password" to the [  ] part above, which is in the remoteURL variable in app/component/Home.js.
 
+### Components
+
+There are RN components and there are ones you create. The ones created are in "/app/android/components". Perhaps this diagram helps to explain the component structure as it exists currently. RN components are in blue.
+
+![diagram](https://raw.githubusercontent.com/InfiniteLibrary/infinite-reader/master/components.jpg)
