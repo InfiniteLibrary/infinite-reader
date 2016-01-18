@@ -14,7 +14,7 @@ var {
 var Reader = React.createClass({
   render: function() {
     // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
-    var imageURI = 'https://raw.githubusercontent.com/' + this.props.full_name + '/master/cover.jpg';
+    var imageURI = 'https://raw.githubusercontent.com/' + this.props.book.full_name + '/master/cover.jpg';
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.mainSection}>

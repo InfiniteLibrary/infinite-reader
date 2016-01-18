@@ -31,6 +31,24 @@ If you have an Android device skip to 3.
 4. In a separate terminal run
     `react-native run-android`
   This will install the device to the device (or emulator). If you experience problems make sure that you have set up development mode on the device and that you have granted all development permissions in the settings.
+5. `adb reverse tcp:8081 tcp:8081`      this connects the device debug port to your computers debug port
+6. hit "Refresh JS"
+
+**On Android**: You will probably get a "POST error" on a red screen. This is a known bug on the npm react-native-couchbase-lite module. The module should probably be part of the repo. For now, you must add the following to "/node_modules/react-native-couchbase-lite/index.js:148"
+
+```
+    if (data) {
+      settings.body = JSON.stringify(data);
+    }
+    else {   // add this!
+      //unresoved hack for error PUT must have a body and GET cant have body
+      if (settings.method == "PUT") {
+        settings.body = ".";
+      }
+    }
+```
+
+**On Linux**: To enable chrome debug you must change the mention of `google-chrome` to `chromium-browser` at "/node_modules/react-native/local-cli/server/middleware/getDevToolsMiddleware.js:19 and 23
 
 
 ### On iOS (codebase is not there yet but shouldn't be hard to implement)
