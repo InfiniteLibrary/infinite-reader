@@ -43,7 +43,6 @@ If you have an Android device skip to 3.
 
 Here's the great part. The app is running a device database. When online, the database will sync with the server to get the latest in the catalog. The database is called couchbaseLite and there is an api to access the device db assets in the react-native-couchbase-lite npm module. Check it out. 
 
-**Note**: For development purposes the app is configured to replicate currently from https://[   ]infinitelibrary.cloudant.com/gitburg/ to get the initial catalog. You must change that or ask us for the password to replicate from there. This means you'll have to add "infinitelibrary:password" to the [  ] part above, which is in the remoteURL variable in app/component/Home.js.
 
 ### Components
 

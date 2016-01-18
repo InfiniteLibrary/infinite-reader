@@ -24,7 +24,7 @@ var Home = React.createClass({
     };
   },
   componentDidMount() {
-    var remoteURL = 'https://infinitelibrary.cloudant.com/gitburg'
+    var remoteURL = 'https://infinitelibrary:mitmedialab@infinitelibrary.cloudant.com/gitburg'
     var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
     database.createDatabase()
       .then((res) => {
