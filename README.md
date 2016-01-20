@@ -51,7 +51,7 @@ If you have an Android device skip to 3.
 **On Linux**: To enable chrome debug you must change the mention of `google-chrome` to `chromium-browser` at "/node_modules/react-native/local-cli/server/middleware/getDevToolsMiddleware.js:19 and 23
 
 
-### On iOS (codebase is not there yet but shouldn't be hard to implement)
+### On iOS (the index.ios.js is not setup for gitburg and no components exist in the iOS directory)
 
 1. Open `ios/ReactNativeCouchbaseLiteExample.xcodeproj` in Xcode.
 2. Run `npm install` and `react-native start`.
@@ -60,6 +60,20 @@ If you have an Android device skip to 3.
 ### Database
 
 Here's the great part. The app is running a device database. When online, the database will sync with the server to get the latest in the catalog. The database is called couchbaseLite and there is an api to access the device db assets in the react-native-couchbase-lite npm module. Check it out. 
+
+### Navigation
+
+Becuase we don't need a lot of routes here, the current app uses the Navigation component. Perhaps the best way to see how this works is to follow what happens when you click a book to open it. In CatalogCell.js there is a `<TouchableElement>`. Awesome. When you select a book to read you touch this and `onPress={this.props.onSelect}` is triggered.
+
+What are "props"? I like to think of them as "pops" because, when you say `this.props`, you are referencing the CatalogCell instance in whichever parent component it is used. In our limited example, it is only used in Home.js . So `this.props.onSelect` fires the onSelect method of the `<CatalogCell>` in Home.js. That in turn fires `this.selectBook(book)` which in turn fires 
+```
+this.props.navigator.push({
+    title: book.title,
+    name: 'reader',
+    book: book,
+}); 
+```
+Here's props again, so we are sending information up to pops(the parent component) which include the `name:'reader'`. Name sets the route to go to next. Because all of the app essentially is wrapped in a Navigator component, the message arrives finally to the navigator to set the route to "reader". Understanding and tracing this path is the key to understanding not only how Navigator works but also how components work in React and React Native.
 
 
 ### Components
