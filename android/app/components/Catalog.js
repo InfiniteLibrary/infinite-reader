@@ -67,7 +67,7 @@ var Catalog = React.createClass({
   render() {
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
+        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>Im in the Drawer!</Text>
       </View>
     );
     return (
