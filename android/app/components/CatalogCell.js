@@ -14,7 +14,7 @@ var {
 } = React;
 
 var CatalogCell = React.createClass({
-  render: function() {
+  render () {
   	var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -25,6 +25,7 @@ var CatalogCell = React.createClass({
     return (
     	<View>
 	      <TouchableElement
+          background={TouchableNativeFeedback.Ripple()} 
 	        onPress={this.props.onSelect}>
 		      <View style={styles.container}>
 		        <Image 
