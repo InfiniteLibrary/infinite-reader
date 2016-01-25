@@ -14,7 +14,7 @@ var {
 } = React;
 
 var CatalogCell = React.createClass({
-  render: function() {
+  render () {
   	var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
@@ -25,13 +25,14 @@ var CatalogCell = React.createClass({
     return (
     	<View>
 	      <TouchableElement
+          background={TouchableNativeFeedback.Ripple()} 
 	        onPress={this.props.onSelect}>
 		      <View style={styles.container}>
 		        <Image 
 		          source={{uri: imageURI}} 
 		          style={styles.thumbnail} />
 		        <View style={styles.rightContainer}>
-		          <Text style={styles.title}>{this.props.book.name}</Text>
+		          <Text style={styles.title}>{this.props.book.title}</Text>
 		        </View>
 		      </View>
 		    </TouchableElement>

@@ -67,7 +67,7 @@ Here's the great part. The app is running a device database. When online, the da
 
 Becuase we don't need a lot of routes here, the current app uses the Navigation component. Perhaps the best way to see how this works is to follow what happens when you click a book to open it. In CatalogCell.js there is a `<TouchableElement>`. Awesome. When you select a book to read you touch this and `onPress={this.props.onSelect}` is triggered.
 
-What are "props"? I like to think of them as "pops" because, when you say `this.props`, you are referencing the CatalogCell instance in whichever parent component it is used. In our limited example, it is only used in Home.js . So `this.props.onSelect` fires the onSelect method of the `<CatalogCell>` in Home.js. That in turn fires `this.selectBook(book)` which in turn fires 
+What are "props"? I like to think of them as "pops" because, when you say `this.props`, you are referencing the CatalogCell instance in whichever parent component it is used. So `this.props.onSelect` fires the onSelect method of the `<CatalogCell>` in Catalog.js. That in turn fires `this.selectBook(book)` which in turn fires 
 ```
 this.props.navigator.push({
     title: book.title,
@@ -75,11 +75,11 @@ this.props.navigator.push({
     book: book,
 }); 
 ```
-Here's props again, so we are sending information up to pops(the parent component) which include the `name:'reader'`. Name sets the route to go to next. Because all of the app essentially is wrapped in a Navigator component, the message arrives finally to the navigator to set the route to "reader". Understanding and tracing this path is the key to understanding not only how Navigator works but also how components work in React and React Native.
+Here's props again, so we are sending information up to the navigator and the key is we are passing the next route with `name:'reader'`. Name sets the route to go to next. Because all of the app essentially is wrapped in a Navigator component, the message arrives at the top-level component, which is the navigator, to set the route to "reader". The title and book are context variables for the next view. Understanding and tracing this path is the key to understanding not only how Navigator works but also how components work in React and React Native.
 
 
 ### Components
 
-There are RN components and there are ones you create. The ones created are in "/app/android/components". Perhaps this diagram helps to explain the component structure as it exists currently. RN components are in blue.
+There are RN components and there are ones you create. The ones created are in "/app/android/components". Perhaps this diagram helps to explain the component structure as it (nearly) exists currently. RN components are in blue.
 
-![diagram](https://raw.githubusercontent.com/InfiniteLibrary/infinite-reader/master/components.jpg)
+![diagram](https://cloud.githubusercontent.com/assets/3521359/12398008/e45cbe86-bdde-11e5-9c13-ad1560f8e701.jpg)

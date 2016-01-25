@@ -7,14 +7,30 @@ var {
   ScrollView,
   StyleSheet,
   Text,
+  Platform,
   View,
+  TouchableNativeFeedback,
+  TouchableHighlight,
 } = React;
 
 
-var Reader = React.createClass({
-  render: function() {
+var Details = React.createClass({
+  readBook(book) {
+    // fix for iOS/Android dismiss keyboard needs to be added
+    this.props.navigator.push({
+      title: book.title,
+      name: 'reader',
+      book: book,
+    });
+  },
+  render() {
+    var TouchableElement = TouchableHighlight;
+    if (Platform.OS === 'android') {
+      TouchableElement = TouchableNativeFeedback;
+    }
     // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
     var imageURI = 'https://raw.githubusercontent.com/' + this.props.book.full_name + '/master/cover.jpg';
+    var book = this.props.book;
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.mainSection}>
@@ -27,6 +43,13 @@ var Reader = React.createClass({
               source={{uri: imageURI}} 
               style={styles.thumbnail} />
           </View>
+          <TouchableElement
+            background={TouchableElement.Ripple()}
+            onPress={() => this.readBook(book)} >
+            <View style={styles.button} >
+              <Text style={styles.title}>Read</Text>
+            </View>
+          </TouchableElement>
         </View>
       </ScrollView>
     );
@@ -53,14 +76,26 @@ var styles = StyleSheet.create({
     marginTop: 10,
   },
   mainSection: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   thumbnail: {
     width: 134,
     height: 200,
     backgroundColor: '#eaeaea',
     marginRight: 10,
-  }
+  },
+  button: {
+    marginBottom: 7,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: '#d6d7da',
+    backgroundColor: '#33b5e5',
+    width: 80,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
-module.exports = Reader;
+module.exports = Details;

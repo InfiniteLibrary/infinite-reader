@@ -8,14 +8,17 @@ var {
   Text,
   View,
   ListView,
-  Image
+  Image,
+  DrawerLayoutAndroid,
+  TouchableHighlight,
+  TouchableNativeFeedback,
 } = React;
 
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password');
 
 var CatalogCell = require('./CatalogCell');
-var Home = React.createClass({
+var Catalog = React.createClass({
   getInitialState() {
     return {
       dataSource: new ListView.DataSource({
@@ -47,7 +50,7 @@ var Home = React.createClass({
     // fix for iOS/Android dismiss keyboard needs to be added
     this.props.navigator.push({
       title: book.title,
-      name: 'reader',
+      name: 'details',
       book: book,
     });
   },
@@ -55,18 +58,37 @@ var Home = React.createClass({
     var book = data.doc
     return (
       <CatalogCell
-        key= {book.id}
+        key= {book._id}
         onSelect={() => this.selectBook(book)}
         book={book}
         style={styles.catalogCell} />
     );
   },
   render() {
+    var navigationView = (
+      <View style={{flex: 1, backgroundColor: '#fff'}}>
+        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>Im in the Drawer!</Text>
+      </View>
+    );
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        style={styles.listView} />
+      <DrawerLayoutAndroid
+        drawerWidth={300}
+        drawerPosition={DrawerLayoutAndroid.positions.Left}
+        ref={(drawer) => { return this.drawer = drawer  }}
+        renderNavigationView={() => navigationView}>
+        <TouchableHighlight 
+          onPress={() => this.drawer.openDrawer()}
+          background={TouchableNativeFeedback.Ripple()} >
+          <Text
+            style={styles.toggleText}>
+            Open drawer
+          </Text>
+        </TouchableHighlight>          
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          style={styles.listView} />
+      </DrawerLayoutAndroid>
     )
   },
 });
@@ -74,12 +96,17 @@ var Home = React.createClass({
 
 var styles = StyleSheet.create({
   catalogCell: {
-    flex: 1
+    flex: 1,
   },
   listView: {
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
+  toggleText: {
+    flex: 1,
+    fontSize: 20,
+    margin: 15,
+  }
 });
 
-module.exports = Home;
+module.exports = Catalog;
