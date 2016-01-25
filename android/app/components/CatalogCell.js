@@ -32,7 +32,7 @@ var CatalogCell = React.createClass({
 		          source={{uri: imageURI}} 
 		          style={styles.thumbnail} />
 		        <View style={styles.rightContainer}>
-		          <Text style={styles.title}>{this.props.book.name}</Text>
+		          <Text style={styles.title}>{this.props.book.title}</Text>
 		        </View>
 		      </View>
 		    </TouchableElement>

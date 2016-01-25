@@ -11,6 +11,7 @@ var {
   Image,
   DrawerLayoutAndroid,
   TouchableHighlight,
+  TouchableNativeFeedback,
 } = React;
 
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
@@ -57,7 +58,7 @@ var Catalog = React.createClass({
     var book = data.doc
     return (
       <CatalogCell
-        key= {book.id}
+        key= {book._id}
         onSelect={() => this.selectBook(book)}
         book={book}
         style={styles.catalogCell} />
@@ -75,7 +76,9 @@ var Catalog = React.createClass({
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         ref={(drawer) => { return this.drawer = drawer  }}
         renderNavigationView={() => navigationView}>
-        <TouchableHighlight onPress={() => this.drawer.openDrawer()}>
+        <TouchableHighlight 
+          onPress={() => this.drawer.openDrawer()}
+          background={TouchableNativeFeedback.Ripple()} >
           <Text
             style={styles.toggleText}>
             Open drawer

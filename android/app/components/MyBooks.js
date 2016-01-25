@@ -55,7 +55,7 @@ var MyBooks = React.createClass({
     var book = data.doc
     return (
       <CatalogCell
-        key= {book.id}
+        key= {book._id}
         onSelect={() => this.selectBook(book)}
         book={book}
         style={styles.catalogCell} />

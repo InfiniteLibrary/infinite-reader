@@ -22,7 +22,7 @@ var Reader = React.createClass({
             * omit a property or set it to undefined if it's inside a shape,
             * even if it isn't required */}
           <View style={styles.rightPane}>
-            <Text style={styles.movieTitle}>{this.props.book.name}</Text>
+            <Text style={styles.movieTitle}>{this.props.book.title}</Text>
             <Image 
               source={{uri: imageURI}} 
               style={styles.thumbnail} />
