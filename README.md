@@ -2,15 +2,17 @@
 
 ## Infinite Reader
 
-A hybrid mobile application offline eBook reader 
+A hybrid mobile application offline eBook reader. 
 
 ### Why?
 
-We at Infinite Library share the desire to create an open and excellent reading experience on as many devices as possible and to collaborate on an open-source project using bleeding-edge technology. Hopefully our project increases access to eBooks around the world.
+We at Infinite Library share the desire to create an open and excellent reading experience on as many devices as possible and to collaborate on an open-source project using modern technology. Hopefully our project increases access to eBooks around the world.
 
 ### Android Environment
 
-Setting up an Android development environment takes a few steps, but once you get set up, you will see how easy it then is to develop Android apps with javascript. The app looks and feels, and is, in more ways that not, a true native app. Get set up [here](https://facebook.github.io/react-native/docs/android-setup.html). 
+Setting up an Android development environment takes a few steps. Once you get set up, you will see how easy it is to develop Android apps with Javascript. The app looks and feels, and is, in more ways that not, a true native app.
+
+Get set up [here](https://facebook.github.io/react-native/docs/android-setup.html). 
 
 ### Node Dependencies
 
