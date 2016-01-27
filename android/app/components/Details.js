@@ -49,6 +49,7 @@ var Details = React.createClass({
               style={styles.thumbnail} />
           </View>
           <MKButton
+            style={styles.button}
             backgroundColor={MKColor.Teal}
             onPress={() => {this.readBook(book);}} >
             <Text pointerEvents="none"
@@ -86,10 +87,18 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   thumbnail: {
-    width: 134,
     height: 200,
+    width: 128,
+    resizeMode: 'cover',
     backgroundColor: '#eaeaea',
-    marginRight: 10,
+  }, 
+  button: {
+    margin: 7,
+    borderRadius: 4,
+    width: 80,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
