@@ -8,6 +8,7 @@ var React = require('react-native');
 var Catalog = require('./android/app/components/Catalog');
 var Details = require('./android/app/components/Details');
 var Reader = require('./android/app/components/Reader');
+var MyBooks = require('./android/app/components/MyBooks');
 var {
   AppRegistry,
   BackAndroid,
@@ -32,6 +33,10 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
   if (route.name === 'catalog') {
     return (
       <Catalog navigator={navigationOperations} />
+    );
+  } else if (route.name === 'mybooks') {
+    return (
+      <MyBooks navigator={navigationOperations} />
     );
   } else if (route.name === 'details') {
     return (
@@ -88,7 +93,7 @@ var styles = StyleSheet.create({
   },
   toolbar: {
     backgroundColor: '#a9a9a9',
-    height: 56,
+    height: 66,
   },
 });
 

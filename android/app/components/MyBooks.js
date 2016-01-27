@@ -2,19 +2,24 @@
 'use strict';
 
 var React = require('react-native');
+var Navigation = require('./Navigation');
+var CatalogCell = require('./CatalogCell');
 
 var {
   StyleSheet,
   Text,
   View,
   ListView,
-  Image
+  Image,
+  DrawerLayoutAndroid,
+  TouchableHighlight,
+  TouchableNativeFeedback,
 } = React;
 
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password');
 
-var CatalogCell = require('./CatalogCell');
+
 var MyBooks = React.createClass({
   getInitialState() {
     return {
@@ -51,6 +56,12 @@ var MyBooks = React.createClass({
       book: book,
     });
   },
+  goTo(route) {
+    // fix for iOS/Android dismiss keyboard needs to be added
+    this.props.navigator.push({
+      name: route,
+    });
+  },
   renderRow(data) {
     var book = data.doc
     return (
@@ -62,12 +73,30 @@ var MyBooks = React.createClass({
     );
   },
   render() {
+    var navigationView = (
+      <Navigation 
+        goToRoute= {(route) => this.goTo(route)}/>
+    );
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        style={styles.listView} />
-    )
+      <DrawerLayoutAndroid
+        drawerWidth={300}
+        drawerPosition={DrawerLayoutAndroid.positions.Left}
+        ref={(drawer) => { return this.drawer = drawer  }}
+        renderNavigationView={() => navigationView}>
+        <TouchableHighlight 
+          onPress={() => this.drawer.openDrawer()}
+          background={TouchableNativeFeedback.Ripple()} >
+          <View style={styles.header}>
+            <Image
+              source={require('image!three_bar')} />
+          </View>
+        </TouchableHighlight>          
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          style={styles.listView} />
+      </DrawerLayoutAndroid>
+    );
   },
 });
 
@@ -79,6 +108,15 @@ var styles = StyleSheet.create({
   listView: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+  },
+  header: {
+    backgroundColor: '#F44336',
+    height: 56,
+  },
+  three_bar: {
+    height: 42,
+    width: 42,
+    margin: 7,
   },
 });
 
