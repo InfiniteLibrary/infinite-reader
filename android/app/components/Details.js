@@ -13,6 +13,11 @@ var {
   TouchableHighlight,
 } = React;
 
+var MK = require('react-native-material-kit');
+var { 
+  MKButton,
+  MKColor,
+} = MK;
 
 var Details = React.createClass({
   readBook(book) {
@@ -43,13 +48,15 @@ var Details = React.createClass({
               source={{uri: imageURI}} 
               style={styles.thumbnail} />
           </View>
-          <TouchableElement
-            background={TouchableElement.Ripple()}
-            onPress={() => this.readBook(book)} >
-            <View style={styles.button} >
-              <Text style={styles.title}>Read</Text>
-            </View>
-          </TouchableElement>
+          <MKButton
+            style={styles.button}
+            backgroundColor={MKColor.Teal}
+            onPress={() => {this.readBook(book);}} >
+            <Text pointerEvents="none"
+                  style={{color: 'white', fontWeight: 'bold',}}>
+              READ
+            </Text>
+          </MKButton>
         </View>
       </ScrollView>
     );
@@ -80,17 +87,14 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   thumbnail: {
-    width: 134,
     height: 200,
+    width: 128,
+    resizeMode: 'cover',
     backgroundColor: '#eaeaea',
-    marginRight: 10,
-  },
+  }, 
   button: {
-    marginBottom: 7,
+    margin: 7,
     borderRadius: 4,
-    borderWidth: 2,
-    borderColor: '#d6d7da',
-    backgroundColor: '#33b5e5',
     width: 80,
     height: 40,
     justifyContent: 'center',

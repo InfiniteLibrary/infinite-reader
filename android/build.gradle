@@ -18,7 +18,7 @@ allprojects {
         jcenter()
         // add couchbase url
         maven {
-            url "http://files.couchbase.com/maven2/"
+            url "https://libraryforall.artifactoryonline.com/libraryforall/libs-release-local/"
         }
     }
 }

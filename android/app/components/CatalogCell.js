@@ -20,7 +20,7 @@ var CatalogCell = React.createClass({
       TouchableElement = TouchableNativeFeedback;
     }
     // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
-    var imageURI = 'https://raw.githubusercontent.com/' + this.props.book.full_name + '/master/cover.jpg';
+    var imageURI = 'http://127.0.0.1:5984/gitburg/' + this.props.book._id + '/cover.jpg';
     console.log(imageURI);
     return (
     	<View>
