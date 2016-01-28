@@ -14,6 +14,7 @@ var {
   DrawerLayoutAndroid,
   TouchableHighlight,
   TouchableNativeFeedback,
+  ToolbarAndroid,
 } = React;
 
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
@@ -83,14 +84,15 @@ var MyBooks = React.createClass({
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         ref={(drawer) => { return this.drawer = drawer  }}
         renderNavigationView={() => navigationView}>
-        <TouchableHighlight 
-          onPress={() => this.drawer.openDrawer()}
-          background={TouchableNativeFeedback.Ripple()} >
-          <View style={styles.header}>
-            <Image
-              source={require('image!three_bar')} />
-          </View>
-        </TouchableHighlight>          
+        
+        <ToolbarAndroid
+          actions={[]}
+          navIcon={require('image!three_bar')}
+          onIconClicked={() => this.drawer.openDrawer()}
+          style={styles.toolBar}
+          titleColor="white"
+          title="My Books" />
+        
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
@@ -109,14 +111,9 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  header: {
-    backgroundColor: '#F44336',
+  toolBar: {
+    backgroundColor: '#FF5252',
     height: 56,
-  },
-  three_bar: {
-    height: 42,
-    width: 42,
-    margin: 7,
   },
 });
 

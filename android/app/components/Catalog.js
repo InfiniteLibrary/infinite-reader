@@ -4,6 +4,7 @@
 var React = require('react-native');
 var Navigation = require('./Navigation');
 var CatalogCell = require('./CatalogCell');
+var SearchBar = require('./SearchBar')
 
 var {
   StyleSheet,
@@ -84,34 +85,22 @@ var Catalog = React.createClass({
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         ref={(drawer) => { return this.drawer = drawer  }}
         renderNavigationView={() => navigationView}>
-        
-        <View style={styles.header}>            
-          <View
-            style={styles.left}>
-            <TouchableHighlight 
-              onPress={() => this.drawer.openDrawer()}
-              background={TouchableNativeFeedback.Ripple()} >
-              <Image
-              style={styles.three_bar}
-              source={require('image!three_bar')} />
-            </TouchableHighlight>  
-          </View>
-          <View
-            style={styles.center}>
-            <Text
-              style={styles.title}> 
-              Catalog
-            </Text>
-          </View>
-          <View
-            style={styles.right}> 
-          </View>
-        </View>
+
+        <ToolbarAndroid
+          actions={[]}
+          navIcon={require('image!three_bar')}
+          onIconClicked={() => this.drawer.openDrawer()}
+          style={styles.toolBar}
+          titleColor="white"
+          title="Catalog" />
+
+        <SearchBar />
         
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           style={styles.listView} />
+
       </DrawerLayoutAndroid>
     )
   },
@@ -126,34 +115,9 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  header: {
-    flexDirection: 'row',
+  toolBar: {
     backgroundColor: '#F44336',
-    height: 66,
-  },
-  three_bar: {
-    height: 44,
-    width: 44,
-  },
-  left: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  center: {
-    flex: 4,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  right: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 28,
-    textAlign: 'center',
-    color: '#ffffff',
+    height: 56,
   },
 });
 

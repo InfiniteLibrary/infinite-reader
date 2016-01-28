@@ -9,6 +9,7 @@ var Catalog = require('./android/app/components/Catalog');
 var Details = require('./android/app/components/Details');
 var Reader = require('./android/app/components/Reader');
 var MyBooks = require('./android/app/components/MyBooks');
+var StatusBarAndroid = require('react-native-android-statusbar');
 var {
   AppRegistry,
   BackAndroid,
@@ -19,6 +20,8 @@ var {
 } = React;
 
 var _navigator;
+
+StatusBarAndroid.setHexColor('#B71C1C');
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
@@ -93,7 +96,7 @@ var styles = StyleSheet.create({
   },
   toolbar: {
     backgroundColor: '#a9a9a9',
-    height: 66,
+    height: 56,
   },
 });
 

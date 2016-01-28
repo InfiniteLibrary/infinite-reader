@@ -13,6 +13,7 @@ import com.facebook.soloader.SoLoader;
 import me.fraserxu.rncouchbaselite.*;
 import com.rnfs.RNFSPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;
+import me.neo.react.StatusBarPackage;
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
 
@@ -32,6 +33,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .addPackage(new MainReactPackage())
                 .addPackage(new RNFSPackage()) 
                 .addPackage(new ReactMaterialKitPackage())
+                .addPackage(new StatusBarPackage(this)) 
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

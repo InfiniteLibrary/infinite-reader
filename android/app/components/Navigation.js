@@ -48,8 +48,8 @@ var Navigation = React.createClass({
             style={styles.logo} />
         </View>
         <NavItem 
-          style={{flex: 1, backgroundColor: '#E53935'}}
-          name = "MyBooks"
+          style={{flex: 1, backgroundColor: '#FF5252'}}
+          name = "My Books"
           onSelect = {() => this.props.goToRoute('mybooks')} />
         <NavItem 
           style={{flex: 1, backgroundColor: '#F44336'}}
@@ -72,7 +72,7 @@ var styles = StyleSheet.create({
   },
   navigation: {  
     flex: 1,
-    backgroundColor: '#F44336'
+    backgroundColor: '#E53935'
   },
   title: {
     fontSize: 28,
@@ -81,7 +81,7 @@ var styles = StyleSheet.create({
   },
   logoArea: {
     flex: 5,
-    backgroundColor: '#FF5252',
+    backgroundColor: '#E53935',
   }
 });
 
