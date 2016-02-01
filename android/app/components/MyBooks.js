@@ -36,8 +36,8 @@ var MyBooks = React.createClass({
       .then((res) => {
         database.replicate(remoteURL, 'demoapp')
       })
-      .then((res) => {
-        return database.getAllDocuments()
+      .then((res) => {        
+        return database.getDesignDocument('_all_docs?include_docs=true&attachments=true')
       })
       .then((res) => {
         this.setState({

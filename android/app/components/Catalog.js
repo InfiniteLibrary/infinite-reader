@@ -38,7 +38,7 @@ var Catalog = React.createClass({
         database.replicate(remoteURL, 'demoapp')
       })
       .then((res) => {
-        return database.getAllDocuments()
+        return database.getDesignDocument('_all_docs?include_docs=true&attachments=true')
       })
       .then((res) => {
         this.setState({

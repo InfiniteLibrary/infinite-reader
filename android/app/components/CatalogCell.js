@@ -19,9 +19,7 @@ var CatalogCell = React.createClass({
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
-    // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
-    var imageURI = 'http://127.0.0.1:5984/gitburg/' + this.props.book._id + '/cover.jpg';
-    console.log(imageURI);
+    var imageURI = 'data:image/jpeg;base64,' + this.props.book._attachments["cover.jpg"].data;
     return (
     	<View>
 	      <TouchableElement
