@@ -17,13 +17,12 @@ var DISABLED_WASH = 'rgba(255,255,255,0.25)';
 
 var TEXT_INPUT_REF = 'urlInput';
 var WEBVIEW_REF = 'webview';
-var DEFAULT_URL = 'https://m.facebook.com';
 
 var WebViewExample = React.createClass({
 
   getInitialState: function() {
+    
     return {
-      url: DEFAULT_URL,
       status: 'No Page Loaded',
       backButtonEnabled: false,
       forwardButtonEnabled: false,
@@ -43,43 +42,11 @@ var WebViewExample = React.createClass({
 
     return (
       <View style={[styles.container]}>
-        <View style={[styles.addressBarRow]}>
-          <TouchableOpacity
-            onPress={this.goBack}
-            style={this.state.backButtonEnabled ? styles.navButton : styles.disabledButton}>
-            <Text>
-               {'<'}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.goForward}
-            style={this.state.forwardButtonEnabled ? styles.navButton : styles.disabledButton}>
-            <Text>
-              {'>'}
-            </Text>
-          </TouchableOpacity>
-          <TextInput
-            ref={TEXT_INPUT_REF}
-            autoCapitalize="none"
-            defaultValue={this.state.url}
-            onSubmitEditing={this.onSubmitEditing}
-            onChange={this.handleTextInputChange}
-            clearButtonMode="while-editing"
-            style={styles.addressBarTextInput}
-          />
-          <TouchableOpacity onPress={this.pressGoButton}>
-            <View style={styles.goButton}>
-              <Text>
-                 Go!
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
         <WebView
           ref={WEBVIEW_REF}
           automaticallyAdjustContentInsets={false}
           style={styles.webView}
-          url={this.state.url}
+          url={this.props.url}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           decelerationRate="normal"
