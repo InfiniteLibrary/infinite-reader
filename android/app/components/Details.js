@@ -33,8 +33,7 @@ var Details = React.createClass({
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
-    // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
-    var imageURI = 'https://raw.githubusercontent.com/' + this.props.book.full_name + '/master/cover.jpg';
+    var imageURI = 'data:image/png;base64,' + this.props.book._attachments["cover.jpg"].data;
     var book = this.props.book;
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
