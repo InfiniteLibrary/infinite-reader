@@ -13,7 +13,7 @@ var {
 
 var Reader = React.createClass({
   render: function() {
-    var imageURI = 'data:image/png;base64,' + this.props.book._attachments["cover.jpg"].data;
+    var imageURI = 'data:image/jpeg;base64,' + this.props.book._attachments["cover.jpg"].data;
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.mainSection}>

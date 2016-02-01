@@ -19,7 +19,7 @@ var CatalogCell = React.createClass({
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
-    var imageURI = 'data:image/png;base64,' + this.props.book._attachments["cover.jpg"].data;
+    var imageURI = 'data:image/jpeg;base64,' + this.props.book._attachments["cover.jpg"].data;
     return (
     	<View>
 	      <TouchableElement
