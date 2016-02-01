@@ -9,6 +9,7 @@ var Catalog = require('./android/app/components/Catalog');
 var Details = require('./android/app/components/Details');
 var Reader = require('./android/app/components/Reader');
 var MyBooks = require('./android/app/components/MyBooks');
+var MyBooks = require('./android/app/components/MyBooks');
 var StatusBarAndroid = require('react-native-android-statusbar');
 var {
   AppRegistry,
@@ -41,7 +42,11 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
     return (
       <MyBooks navigator={navigationOperations} />
     );
-  } else if (route.name === 'details') {
+  } else if (route.name === 'login') {
+    return (
+      <Login navigator={navigationOperations} />
+    );
+  }  else if (route.name === 'details') {
     return (
       <View style={{flex: 1}}>
         <ToolbarAndroid
@@ -78,7 +83,7 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
 
 var ReactNativeCouchbaseLiteExample = React.createClass({
   render: function () {
-    var initialRoute = {name: 'catalog'};
+    var initialRoute = {name: 'login'};
     return (
       <Navigator
         style={styles.container}
