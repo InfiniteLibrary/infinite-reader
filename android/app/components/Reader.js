@@ -10,24 +10,12 @@ var {
   View,
 } = React;
 
+var WebView = require('./WebView');
 
 var Reader = React.createClass({
-  render: function() {
-    var imageURI = 'data:image/jpeg;base64,' + this.props.book._attachments["cover.jpg"].data;
+  render() {
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.mainSection}>
-          {/* $FlowIssue #7363964 - There's a bug in Flow where you cannot
-            * omit a property or set it to undefined if it's inside a shape,
-            * even if it isn't required */}
-          <View style={styles.rightPane}>
-            <Text style={styles.movieTitle}>{this.props.book.title}</Text>
-            <Image 
-              source={{uri: imageURI}} 
-              style={styles.thumbnail} />
-          </View>
-        </View>
-      </ScrollView>
+      <WebView />
     );
   },
 });
