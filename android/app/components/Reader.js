@@ -14,8 +14,9 @@ var WebView = require('./WebView');
 
 var Reader = React.createClass({
   render() {
+    var bookURL = "https://rawgit.com/InfiniteLibraryLibrary/" + this.props.book.title + "/master/book.xhtml";
     return (
-      <WebView />
+      <WebView url={bookURL}/>
     );
   },
 });
