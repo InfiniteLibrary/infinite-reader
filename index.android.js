@@ -9,7 +9,7 @@ var Catalog = require('./android/app/components/Catalog');
 var Details = require('./android/app/components/Details');
 var Reader = require('./android/app/components/Reader');
 var MyBooks = require('./android/app/components/MyBooks');
-var MyBooks = require('./android/app/components/MyBooks');
+var Login = require('./android/app/components/Login');
 var StatusBarAndroid = require('react-native-android-statusbar');
 var {
   AppRegistry,
@@ -46,7 +46,7 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
     return (
       <Login navigator={navigationOperations} />
     );
-  }  else if (route.name === 'details') {
+  } else if (route.name === 'details') {
     return (
       <View style={{flex: 1}}>
         <ToolbarAndroid

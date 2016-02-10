@@ -102,7 +102,7 @@ var Catalog = React.createClass({
           style={styles.listView} />
 
       </DrawerLayoutAndroid>
-    )
+    );
   },
 });
 

@@ -55,6 +55,10 @@ var Navigation = React.createClass({
           style={{flex: 1, backgroundColor: '#F44336'}}
           name = "Catalog"
           onSelect = {() => this.props.goToRoute('catalog')} />
+        <NavItem 
+          style={{flex: 1, backgroundColor: '#F44336'}}
+          name = "Logout"
+          onSelect = {() => this.props.goToRoute('login')} />
       </View>
     );
   }
