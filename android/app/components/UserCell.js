@@ -13,29 +13,24 @@ var {
   View
 } = React;
 
-var CatalogCell = React.createClass({
+var UserCell = React.createClass({
   render () {
-  	var TouchableElement = TouchableHighlight;
+    var TouchableElement = TouchableHighlight;
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
-    var imageURI = 'data:image/jpeg;base64,' + this.props.book._attachments["cover.jpg"].data;
-    console.log(imageURI)
     return (
-    	<View>
-	      <TouchableElement
+      <View>
+        <TouchableElement
           background={TouchableNativeFeedback.Ripple()} 
-	        onPress={this.props.onSelect}>
-		      <View style={styles.container}>
-		        <Image 
-		          source={{uri: imageURI}} 
-		          style={styles.thumbnail} />
-		        <View style={styles.rightContainer}>
-		          <Text style={styles.title}>{this.props.book.title}</Text>
-		        </View>
-		      </View>
-		    </TouchableElement>
-		  </View>
+          onPress={this.props.onSelect}>
+          <View style={styles.container}>
+            <View style={styles.rightContainer}>
+              <Text style={styles.title}>{this.props.user.name}</Text>
+            </View>
+          </View>
+        </TouchableElement>
+      </View>
     );
   }
 });
@@ -47,6 +42,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    padding: 3,
   },
   rightContainer: {
     flex: 1,
@@ -65,4 +61,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = CatalogCell;
+module.exports = UserCell;
