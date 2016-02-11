@@ -19,7 +19,7 @@ var {
 } = React;
 
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
-ReactCBLite.init(5984, 'admin', 'password');
+ReactCBLite.init(5984, 'admin', 'password', (e) => {});
 
 
 var Catalog = React.createClass({
