@@ -10,7 +10,7 @@ We at Infinite Library share the desire to create an open and excellent reading 
 
 ### Android Quick Start With Vagrant
 1. Connect an Android device with developer mode enabled OR install [Genymotion](https://www.genymotion.com/#!/download) and install a Nexus 5 or 7 (Android version 5.1). If using Genymotion, disable its ADB by selecting Settings -> ABD -> Use custom  Android SDK tools -> <blank>.
-2. Install (Vagrant)[https://www.vagrantup.com/docs/getting-started/]
+2. Install [Vagrant]{https://www.vagrantup.com/docs/getting-started/)
 3. Clone this repository and change to its directory.
 4. If using a physical device run:
 ```
