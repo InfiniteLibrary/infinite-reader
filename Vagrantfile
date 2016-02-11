@@ -22,9 +22,9 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 4984, host: 4984
 
   # Create a private network, which allows NFS
-  config.vm.network "private_network", ip: "192.168.33.10"
+  # config.vm.network "private_network", ip: "192.168.33.10"
   # Use NFS for shared folders for better performance
-  config.vm.synced_folder '.', '/vagrant', nfs: true
+  # config.vm.synced_folder '.', '/vagrant', nfs: true
 
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
@@ -107,6 +107,7 @@ Vagrant.configure(2) do |config|
     adb reverse tcp:8081 tcp:8081
 
     # Start the react-native server and deploy to connected android device
+    react-native run-android
     nohup react-native start 0<&- &>/dev/null &
     echo "Waiting for react-native server to start"
     sleep 15
