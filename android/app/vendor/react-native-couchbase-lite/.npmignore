@@ -1,0 +1,12 @@
+# Android
+local.properties
+.idea
+.gradle
+build
+*.iml
+
+# Don't publish the example project to npm
+ReactNativeCouchbaseLiteExample
+
+# Readme assets
+assets/

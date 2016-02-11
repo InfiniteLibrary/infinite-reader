@@ -1,0 +1,59 @@
+{
+  "name": "react-native-couchbase-lite",
+  "version": "0.2.3",
+  "description": "couchbase lite binding for react-native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fraserxu/react-native-couchbase-lite.git"
+  },
+  "keywords": [
+    "react-component",
+    "react-native",
+    "android"
+  ],
+  "peerDependencies": {
+    "react-native": ">=0.14"
+  },
+  "author": {
+    "name": "Fraser Xu"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fraserxu/react-native-couchbase-lite/issues"
+  },
+  "homepage": "https://github.com/fraserxu/react-native-couchbase-lite#readme",
+  "dependencies": {
+    "base-64": "^0.1.0"
+  },
+  "gitHead": "4cb8ba33882b27cf84423a7b1c55909440868c71",
+  "_id": "react-native-couchbase-lite@0.2.3",
+  "_shasum": "aebc77e6fdca72cf173f0543a2755031b36f9a98",
+  "_from": "react-native-couchbase-lite@0.2.3",
+  "_npmVersion": "2.14.12",
+  "_nodeVersion": "4.2.6",
+  "_npmUser": {
+    "name": "jamiltz",
+    "email": "james.nocentini@gmail.com"
+  },
+  "dist": {
+    "shasum": "aebc77e6fdca72cf173f0543a2755031b36f9a98",
+    "tarball": "http://registry.npmjs.org/react-native-couchbase-lite/-/react-native-couchbase-lite-0.2.3.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "fraserxu",
+      "email": "xvfeng123@gmail.com"
+    },
+    {
+      "name": "jamiltz",
+      "email": "james.nocentini@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/react-native-couchbase-lite/-/react-native-couchbase-lite-0.2.3.tgz",
+  "readme": "ERROR: No README data found!"
+}
