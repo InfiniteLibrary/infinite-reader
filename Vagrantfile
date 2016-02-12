@@ -69,19 +69,19 @@ Vagrant.configure(2) do |config|
     cd /vagrant
     
     ### Install React Native
-    npm install -g react-native-cli
+    sudo npm install -g react-native-cli
     
     ### Install packages
     # Run with --no-bin-links to prevent errors on Windows when creating symlinks to a shared folder
-    npm install --no-bin-links
+    sudo npm install --no-bin-links
         
     ### Fix for https://github.com/xinthink/react-native-material-kit/issues/77
     cp node_modules/react-native-material-kit/android/build.gradle node_modules/react-native-material-kit/android/build.gradle.old
     sed "s/buildToolsVersion '23.0.2'/buildToolsVersion '23.0.1'/" node_modules/react-native-material-kit/android/build.gradle.old > node_modules/react-native-material-kit/android/build.gradle
         
     ## Prevent http://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc
-    npm dedupe
-    echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+    sudo npm dedupe
+    sudo echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
   SHELL
   
   # Note: below always runs when the "vagrant up" or "vagrant reload" is run
@@ -94,10 +94,11 @@ Vagrant.configure(2) do |config|
 
     # Connect to IP if specified
     if [ -n $_ADB_EMULATOR_IP_ADDRESS ];
+    then
         # Local version of ADB_EMULATOR_IP_ADDRESS with no whitespace
         export _ADB_EMULATOR_IP_ADDRESS=#{ENV['ADB_EMULATOR_IP_ADDRESS']}
         export _ADB_EMULATOR_IP_ADDRESS="$(echo -e $_ADB_EMULATOR_IP_ADDRESS | tr -d '[[:space:]]')"
-        then adb connect $_ADB_EMULATOR_IP_ADDRESS
+        adb connect $_ADB_EMULATOR_IP_ADDRESS
         # Appears to need some time before the adb reverse command to correctly identify the device
         echo "Waiting for adb connection to stabilize"
         sleep 5
@@ -108,7 +109,7 @@ Vagrant.configure(2) do |config|
 
     # Start the react-native server and deploy to connected android device
     react-native run-android
-    nohup react-native start 0<&- &>/dev/null &
+    nohup sudo react-native start 0<&- &>/dev/null &
     echo "Waiting for react-native server to start"
     sleep 15
     react-native run-android

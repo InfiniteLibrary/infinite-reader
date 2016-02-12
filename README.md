@@ -16,11 +16,11 @@ We at Infinite Library share the desire to create an open and excellent reading 
 ```
 vagrant up
 ```
-Or with an emulator in Windows:
+Or with an emulator in Windows (replace IP address with your emulator's IP):
 ```
 set ADB_EMULATOR_IP_ADDRESS=192.168.56.101 && vagrant up
 ```
-Or with an emulator in Linux:
+Or with an emulator in Linux (replace IP address with your emulator's IP):
 ```
 ADB_EMULATOR_IP_ADDRESS=192.168.56.101 && vagrant up
 ```
