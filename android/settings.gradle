@@ -3,5 +3,9 @@ rootProject.name = 'ReactNativeCouchbaseLiteExample'
 include ':app'
 include ':react-native-couchbase-lite'
 include ':react-native-fs'
-project(':react-native-couchbase-lite').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-couchbase-lite/android')
+include ':RNMaterialKit'
+include ':react-native-android-statusbar'
+project(':react-native-couchbase-lite').projectDir = new File(rootProject.projectDir, 'app/vendor/react-native-couchbase-lite/android')
 project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
+project(':RNMaterialKit').projectDir = file('../node_modules/react-native-material-kit/android')
+project(':react-native-android-statusbar').projectDir = new File(settingsDir, '../node_modules/react-native-android-statusbar')

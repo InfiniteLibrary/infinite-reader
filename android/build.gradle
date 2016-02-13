@@ -1,5 +1,31 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+def versionOverrides = [
+    "com.couchbase.lite:couchbase-lite-java-listener": "1.0.0",
+]
+
+subprojects {
+
+    configurations.all {
+
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+
+            def overrideVersion = versionOverrides[details.requested.group + ":" + details.requested.name]
+
+            if (overrideVersion != null && details.requested.version != overrideVersion) {
+                logger.info "Overriding dependency ${details.requested.group}:${details.requested.name} version ${details.requested.version} --> $overrideVersion"
+                details.useVersion overrideVersion
+            }
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.couchbase.lite:couchbase-lite-java-listener:1.0.0'
+    }
+}
+
 buildscript {
     repositories {
         jcenter()

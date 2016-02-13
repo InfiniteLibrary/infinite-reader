@@ -5,8 +5,12 @@
 'use strict';
 
 var React = require('react-native');
-var Home = require('./android/app/components/Home');
+var Catalog = require('./android/app/components/Catalog');
+var Details = require('./android/app/components/Details');
 var Reader = require('./android/app/components/Reader');
+var MyBooks = require('./android/app/components/MyBooks');
+var Login = require('./android/app/components/Login');
+var StatusBarAndroid = require('react-native-android-statusbar');
 var {
   AppRegistry,
   BackAndroid,
@@ -18,6 +22,8 @@ var {
 
 var _navigator;
 
+StatusBarAndroid.setHexColor('#B71C1C');
+
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
     _navigator.pop();
@@ -28,9 +34,33 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 
 var RouteMapper = function(route, navigationOperations, onComponentRef) {
   _navigator = navigationOperations;
-  if (route.name === 'home') {
+  if (route.name === 'catalog') {
     return (
-      <Home navigator={navigationOperations} />
+      <Catalog navigator={navigationOperations} />
+    );
+  } else if (route.name === 'mybooks') {
+    return (
+      <MyBooks navigator={navigationOperations} />
+    );
+  } else if (route.name === 'login') {
+    return (
+      <Login navigator={navigationOperations} />
+    );
+  } else if (route.name === 'details') {
+    return (
+      <View style={{flex: 1}}>
+        <ToolbarAndroid
+          actions={[]}
+          navIcon={require('image!android_back_white')}
+          onIconClicked={navigationOperations.pop}
+          style={styles.toolbar}
+          titleColor="white"
+          title={route.book.title} />
+        <Details
+          style={{flex: 1}}
+          navigator={navigationOperations}
+          book={route.book} />
+      </View>
     );
   } else if (route.name === 'reader') {
     return (
@@ -53,7 +83,7 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
 
 var ReactNativeCouchbaseLiteExample = React.createClass({
   render: function () {
-    var initialRoute = {name: 'home'};
+    var initialRoute = {name: 'login'};
     return (
       <Navigator
         style={styles.container}
