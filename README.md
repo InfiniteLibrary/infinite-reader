@@ -11,20 +11,34 @@ We at Infinite Library share the desire to create an open and excellent reading 
 ### Android Quick Start With Vagrant
 1. Connect an Android device with developer mode enabled OR install [Genymotion](https://www.genymotion.com/#!/download) and install a Nexus 5 or 7 (Android version 5.1). If using Genymotion, disable its ADB by selecting Settings -> ABD -> Use custom  Android SDK tools -> <blank>.
 2. Install [Vagrant]{https://www.vagrantup.com/docs/getting-started/)
-3. Clone this repository and change to its directory.
-4. If using a physical device run:
+3. Install openssh and rsync using your operating system's package manager or installation tools - these are generally already installed on most Linux configurations.
+If in Windows:
+  1. Install [Cygwin](https://cygwin.com/install.html). Within the installer, choose the rsync and openssh packages as per https://github.com/mitchellh/vagrant/issues/3913#issuecomment-45761049. Also install git, under the "Devel" category, to allow cloning this repository.
+  2. If Vagrant issue https://github.com/mitchellh/vagrant/issues/6702 is not yet resolved, you will need to follow the instructions under https://github.com/mitchellh/vagrant/issues/6702#issuecomment-166503021
+  3. Launch a terminal using the "Cygwin terminal" shortcut on your desktop or Start Menu.
+4. Clone this repository and change to the new folder.
+5. If using a physical device run:
 ```
 vagrant up
 ```
-Or with an emulator in Windows (replace IP address with your emulator's IP):
+If using an emulator (replace IP address with your emulator's IP):
 ```
-set ADB_EMULATOR_IP_ADDRESS=192.168.56.101 && vagrant up
+ADB_EMULATOR_IP_ADDRESS=192.168.56.101 vagrant up
 ```
-Or with an emulator in Linux (replace IP address with your emulator's IP):
+This will start the virtual machine which is running the infinite-reader code copied from your host machine.
+6. Start the Vagrant rsync daemon:
 ```
-ADB_EMULATOR_IP_ADDRESS=192.168.56.101 && vagrant up
+vagrant rsync-auto &
 ```
-And the infinite-reader should be deployed to your phone or emulator. Changes made to the code should automatically update when 'Refresh JS' is used.
+This will automatically sync changes from the host to the VM.
+7. Optionally, connect to the virtual machine and monitor the output of the react server:
+```
+vagrant ssh
+tail -f /vagrant/react-native.log
+```
+The infinite-reader should now be deployed to the phone or emulator. 
+Enable live reload using the "shake" gesture (<kbd>Ctrl</kbd>-m in Genymotion) and select "Enable Live Reload".
+Changes made to the code should automatically update on the device.
 
 ### Android Environment
 
