@@ -175,11 +175,32 @@ manager.prototype = {
     }
     return fetch(url, settings).then((res) => {
       if (res.status == 401) {
-        console.log(res);
+        console.log(res);  
       }
       return res.json();
     }).catch((err) => { throw err; });
-  }
+  },
+
+  createHTMLAttachment: function(docName, blob) {
+    var settings = {
+      method: "PUT",
+      headers: {
+        'Accept': 'text/html',
+        'Content-Type': 'text/html',
+        'If-Match': '*',
+        'Authorization': this.authHeader
+      },
+      body: blob
+    };
+    var url = this.databaseUrl + this.databaseName + "/" + docName + "/book.xhtml"
+    return fetch(url, settings).then((res) => {
+      if (res.status == 401) {
+        console.log(res);
+      }
+      console.log(res)
+      return res.json();
+    }).catch((err) => { throw err; });
+  },
 };
 
 module.exports = {manager, ReactCBLite};

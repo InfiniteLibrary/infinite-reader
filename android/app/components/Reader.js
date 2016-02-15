@@ -12,11 +12,46 @@ var {
 
 var WebView = require('./WebView');
 
+import {manager, ReactCBLite} from 'react-native-couchbase-lite'
+ReactCBLite.init(5984, 'admin', 'password', (e) => {});
+
+
 var Reader = React.createClass({
+  getInitialState() {
+    return {
+      bookURL: "",
+    }
+  },
+  componentDidMount() {
+    var database = new manager('http://admin:password@localhost:5984/', 'books');
+    
+    //what I did to try to create the attachment
+
+    // var remoteBookURL = "https://rawgit.com/InfiniteLibraryLibrary/" + this.props.book.title + "/master/book.xhtml"
+    // database.createDatabase()
+    // fetch(remoteBookURL)
+    //   .then((res) => {
+    //     return res.blob();
+    //   })
+    //   .then((blob) => {
+    //     database.createHTMLAttachment(this.props.book._id, blob);
+    //   });
+
+
+    // what I did to try to display the attachment 
+    
+    database.createDatabase()
+      .then((res) => {
+        return database.getDocument(this.props.book._id)
+      })
+      .then((res) => {
+        var localURI = res._attachments["book.xhtml"].data;
+        this.setState({bookURL: localURI})
+      })
+  },
   render() {
-    var bookURL = "https://rawgit.com/InfiniteLibraryLibrary/" + this.props.book.title + "/master/book.xhtml";
     return (
-      <WebView url={bookURL}/>
+      <WebView url={this.state.bookURL}/>
     );
   },
 });
