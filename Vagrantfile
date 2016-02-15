@@ -21,10 +21,9 @@ Vagrant.configure(2) do |config|
   # For couchbase-sync-gateway
   config.vm.network "forwarded_port", guest: 4984, host: 4984
 
-  # Create a private network, which allows NFS
-  # config.vm.network "private_network", ip: "192.168.33.10"
-  # Use NFS for shared folders for better performance
-  # config.vm.synced_folder '.', '/vagrant', nfs: true
+  # Use rsync to keep files on the host continually updated in the VM
+  # This is required for live reload to work correctly
+  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
 
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
@@ -44,7 +43,7 @@ Vagrant.configure(2) do |config|
     ANDROID_SDK=http://dl.google.com/android/$ANDROID_SDK_FILENAME
 
     apt-get update
-    apt-get install -y npm git openjdk-7-jdk ant expect lib32stdc++6 lib32z1 xterm
+    apt-get install -y npm git openjdk-7-jdk ant expect lib32stdc++6 lib32z1 xterm automake autoconf python-dev
     npm install -g n
     n stable
 
@@ -64,12 +63,22 @@ Vagrant.configure(2) do |config|
             eof
         }
     '
+    
+    # Install Facebook's watchman
+    git clone https://github.com/facebook/watchman.git
+    cd watchman
+    ./autogen.sh
+    ./configure
+    make
+    sudo make install
+    
         
     ### Below this point, run in the shared vagrant folder
     cd /vagrant
     
-    ### Install React Native
+    ### Install React Native w/ dependencies
     sudo npm install -g react-native-cli
+    sudo npm install -g flow
     
     ### Install packages
     # Run with --no-bin-links to prevent errors on Windows when creating symlinks to a shared folder
@@ -82,6 +91,10 @@ Vagrant.configure(2) do |config|
     ## Prevent http://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc
     sudo npm dedupe
     sudo echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+    # Enable the gradle daemon - needs to be under /root since the react-native server runs as root
+    sudo mkdir ~/.gradle
+    sudo touch ~/.gradle/gradle.properties && sudo echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
   SHELL
   
   # Note: below always runs when the "vagrant up" or "vagrant reload" is run
@@ -109,9 +122,9 @@ Vagrant.configure(2) do |config|
 
     # Start the react-native server and deploy to connected android device
     react-native run-android
-    nohup sudo react-native start 0<&- &>/dev/null &
+    nohup sudo react-native start >/vagrant/react-native.log 2>&1 </dev/null &
     echo "Waiting for react-native server to start"
-    sleep 15
+    sleep 5
     react-native run-android
   SHELL
   
