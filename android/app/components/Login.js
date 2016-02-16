@@ -68,14 +68,22 @@ var Login = React.createClass({
   // if the input button is pressed
 
 	addUser() {
-		// update session
-		this.setState({session: {"user": { "name": this.state.text } }});
 		// create user
     var date = new Date
     var dateString = date.toISOString()
-    var userID = this.state.text + '-' + dateString 
-    this.userDB.createDocument(this.state.session.user, userID);
+    var userID = this.state.text + '-' + dateString
     // update session
+    this.setState({
+      session: {
+        user: { 
+          name: this.state.text, 
+          _id: userID,
+          downloaded: [],
+        }
+      }
+    });
+    this.userDB.createDocument(this.state.session.user, userID);
+
     this.sessionDB.createDocument(this.state.session, "currentSession");
     // move on
     this.props.navigator.push({

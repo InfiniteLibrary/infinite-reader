@@ -32,13 +32,13 @@ var Catalog = React.createClass({
   },
   componentDidMount() {
     var remoteURL = 'https://infinitelibrary:mitmedialab@infinitelibrary.cloudant.com/gitburg'
-    var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
-    database.createDatabase()
+    var catalogDB = new manager('http://admin:password@localhost:5984/', 'catalog');
+    catalogDB.createDatabase()
       .then((res) => {
-        database.replicate(remoteURL, 'demoapp')
+        catalogDB.replicate(remoteURL, 'catalog')
       })
       .then((res) => {
-        return database.getDesignDocument('_all_docs?include_docs=true&attachments=true')
+        return catalogDB.getDesignDocument('_all_docs?include_docs=true&attachments=true')
       })
       .then((res) => {
         this.setState({
@@ -46,7 +46,7 @@ var Catalog = React.createClass({
         });
         console.log(res.rows)
       })
-      .catch((ex) => {file:///android_asset/
+      .catch((ex) => {
         console.log(ex)
       })
   },

@@ -30,14 +30,10 @@ var MyBooks = React.createClass({
     };
   },
   componentDidMount() {
-    var remoteURL = 'https://infinitelibrary.cloudant.com/gitburg'
-    var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
-    database.createDatabase()
-      .then((res) => {
-        database.replicate(remoteURL, 'demoapp')
-      })
+    var myBooksDB = new manager('http://admin:password@localhost:5984/', 'mybooks');
+    myBooksDB.createDatabase()
       .then((res) => {        
-        return database.getDesignDocument('_all_docs?include_docs=true&attachments=true')
+        return myBooksDB.getDesignDocument('_all_docs?include_docs=true&attachments=true')
       })
       .then((res) => {
         this.setState({
@@ -45,7 +41,7 @@ var MyBooks = React.createClass({
         });
         console.log(res.rows)
       })
-      .catch((ex) => {file:///android_asset/
+      .catch((ex) => {
         console.log(ex)
       })
   },

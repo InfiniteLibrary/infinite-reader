@@ -181,18 +181,18 @@ manager.prototype = {
     }).catch((err) => { throw err; });
   },
 
-  createHTMLAttachment: function(docName, blob) {
+  createAttachment: function(docName, data, attachmentName, contentType) {
     var settings = {
       method: "PUT",
       headers: {
-        'Accept': 'text/html',
-        'Content-Type': 'text/html',
+        'Accept': contentType,
+        'Content-Type': contentType,
         'If-Match': '*',
         'Authorization': this.authHeader
       },
-      body: blob
+      body: data
     };
-    var url = this.databaseUrl + this.databaseName + "/" + docName + "/book.xhtml"
+    var url = this.databaseUrl + this.databaseName + "/" + docName + "/" + attachmentName
     return fetch(url, settings).then((res) => {
       if (res.status == 401) {
         console.log(res);
@@ -200,7 +200,8 @@ manager.prototype = {
       console.log(res)
       return res.json();
     }).catch((err) => { throw err; });
-  },
+  }
+
 };
 
 module.exports = {manager, ReactCBLite};

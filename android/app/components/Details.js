@@ -19,14 +19,40 @@ var {
   MKColor,
 } = MK;
 
+import {manager, ReactCBLite} from 'react-native-couchbase-lite'
+ReactCBLite.init(5984, 'admin', 'password', (e) => {});
+
+// booksDB
+var booksDB = new manager('http://admin:password@localhost:5984/', 'books');
+booksDB.createDatabase();
+// myBooksDB
+var usersDB = new manager('http://admin:password@localhost:5984/', 'users');
+usersDB.createDatabase();
+// sessionDB
+var currentUser = {}
+var sessionDB = new manager('http://admin:password@localhost:5984/', 'session');
+sessionDB.createDatabase();
+sessionDB.getDocument('currentSession').then((res) => { currentUser = user; });  
+
 var Details = React.createClass({
-  readBook(book) {
-    // fix for iOS/Android dismiss keyboard needs to be added
-    this.props.navigator.push({
-      title: book.title,
-      name: 'reader',
-      book: book,
-    });
+  downloadBook(book) {
+    var remoteBookURL = "https://rawgit.com/InfiniteLibraryLibrary/" + book.title + "/master/book.xhtml"
+    fetch(remoteBookURL)  // should be (book.url)
+      .then((res) => {
+        return res.text()
+      })
+      .then((htmlText) => {
+        booksDB.createAttachment(book._id, htmlText, 'book.xhtml', 'text/html')
+      })
+      .then((res) => {
+        currentUser.downloaded.push(book._id);
+      })
+      .then((res) => { 
+        this.props.navigator.push({ name: 'mybooks' });
+      })
+      .catch((ex) => {
+        console.log(ex)
+      });
   },
   render() {
     var TouchableElement = TouchableHighlight;
@@ -50,10 +76,10 @@ var Details = React.createClass({
           <MKButton
             style={styles.button}
             backgroundColor={MKColor.Teal}
-            onPress={() => {this.readBook(book);}} >
+            onPress={() => {this.downloadBook(book);}} >
             <Text pointerEvents="none"
                   style={{color: 'white', fontWeight: 'bold',}}>
-              READ
+              DOWNLOAD
             </Text>
           </MKButton>
         </View>

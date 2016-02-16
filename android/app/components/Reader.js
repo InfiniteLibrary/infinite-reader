@@ -23,26 +23,11 @@ var Reader = React.createClass({
     }
   },
   componentDidMount() {
-    var database = new manager('http://admin:password@localhost:5984/', 'books');
-    
-    //what I did to try to create the attachment
-
-    // var remoteBookURL = "https://rawgit.com/InfiniteLibraryLibrary/" + this.props.book.title + "/master/book.xhtml"
-    // database.createDatabase()
-    // fetch(remoteBookURL)
-    //   .then((res) => {
-    //     return res.blob();
-    //   })
-    //   .then((blob) => {
-    //     database.createHTMLAttachment(this.props.book._id, blob);
-    //   });
-
-
-    // what I did to try to display the attachment 
-    
-    database.createDatabase()
+    // booksDB
+    var booksDB = new manager('http://admin:password@localhost:5984/', 'books');
+    booksDB.createDatabase()
       .then((res) => {
-        return database.getDocument(this.props.book._id)
+        return booksDB.getDocument(this.props.book._id)
       })
       .then((res) => {
         var localURI = res._attachments["book.xhtml"].data;
