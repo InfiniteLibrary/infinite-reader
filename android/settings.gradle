@@ -1,4 +1,4 @@
-rootProject.name = 'ReactNativeCouchbaseLiteExample'
+rootProject.name = 'InfiniteReader'
 
 include ':app'
 include ':react-native-couchbase-lite'
