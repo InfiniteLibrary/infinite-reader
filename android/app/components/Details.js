@@ -22,19 +22,28 @@ var {
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password', (e) => {});
 
-// booksDB
 var booksDB = new manager('http://admin:password@localhost:5984/', 'books');
 booksDB.createDatabase();
-// myBooksDB
-var usersDB = new manager('http://admin:password@localhost:5984/', 'users');
+var usersDB = new manager('http://admin:password@localhost:5984/', 'users')
 usersDB.createDatabase();
-// sessionDB
-var currentUser = {}
 var sessionDB = new manager('http://admin:password@localhost:5984/', 'session');
-sessionDB.createDatabase();
-sessionDB.getDocument('currentSession').then((res) => { currentUser = user; });  
+
 
 var Details = React.createClass({
+  getInitialState() {
+    return {
+      user : {}
+    }
+  },
+  componentDidMount() {
+    sessionDB.createDatabase()
+      .then((res) => {
+        return sessionDB.getDocument("current")
+      })
+      .then((res) => {
+        this.setState({user, res});
+      });
+  },
   downloadBook(book) {
     var remoteBookURL = "https://rawgit.com/InfiniteLibraryLibrary/" + book.title + "/master/book.xhtml"
     fetch(remoteBookURL)  // should be (book.url)
@@ -42,10 +51,13 @@ var Details = React.createClass({
         return res.text()
       })
       .then((htmlText) => {
-        booksDB.createAttachment(book._id, htmlText, 'book.xhtml', 'text/html')
+        // save book to booksDB
+        return booksDB.createAttachment(book._id, htmlText, 'book.xhtml', 'text/html')
       })
       .then((res) => {
-        currentUser.downloaded.push(book._id);
+        // save book to user
+        this.state.user.downloaded.push(book._id);
+        updateDocument(this.state.user, user.rev)
       })
       .then((res) => { 
         this.props.navigator.push({ name: 'mybooks' });
@@ -68,7 +80,7 @@ var Details = React.createClass({
             * omit a property or set it to undefined if it's inside a shape,
             * even if it isn't required */}
           <View style={styles.rightPane}>
-            <Text style={styles.movieTitle}>{this.props.book.title}</Text>
+            <Text style={styles.movieTitle}>{book.title}</Text>
             <Image 
               source={{uri: imageURI}} 
               style={styles.thumbnail} />

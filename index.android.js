@@ -20,7 +20,28 @@ var {
   View,
 } = React;
 
-var _navigator;
+var _navigator
+
+import {manager, ReactCBLite} from 'react-native-couchbase-lite'
+ReactCBLite.init(5984, 'admin', 'password', (e) => {});
+
+var remoteURL = 'https://infinitelibrary:mitmedialab@infinitelibrary.cloudant.com/'
+
+// local database connections
+var catalogDB = new manager('http://admin:password@localhost:5984/', 'catalog');
+var userDB = new manager('http://admin:password@localhost:5984/', 'users');
+
+// replicate down the catalog
+catalogDB.createDatabase()
+  .then((res) => {
+    catalogDB.replicate(remoteURL + "gitburg", "catalog")
+  });
+
+// replicate up the users
+userDB.createDatabase()
+  .then((res) => {
+    userDB.replicate('users', remoteURL + "users")
+  });
 
 StatusBarAndroid.setHexColor('#B71C1C');
 
@@ -34,21 +55,22 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 
 var RouteMapper = function(route, navigationOperations, onComponentRef) {
   _navigator = navigationOperations;
+
   if (route.name === 'catalog') {
     return (
-      <Catalog navigator={navigationOperations} />
+      <Catalog navigator={navigationOperations}/>
     );
   } else if (route.name === 'mybooks') {
     return (
-      <MyBooks navigator={navigationOperations} />
+      <MyBooks navigator={navigationOperations}/>
     );
   } else if (route.name === 'login') {
     return (
-      <Login navigator={navigationOperations} />
+      <Login navigator={navigationOperations}/>
     );
   } else if (route.name === 'details') {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1}} >
         <ToolbarAndroid
           actions={[]}
           navIcon={require('image!android_back_white')}
@@ -82,7 +104,7 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
 };
 
 var ReactNativeCouchbaseLiteExample = React.createClass({
-  render: function () {
+  render () {
     var initialRoute = {name: 'login'};
     return (
       <Navigator

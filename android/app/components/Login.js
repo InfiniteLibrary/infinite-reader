@@ -23,6 +23,9 @@ var {
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password', (e) => {});
 
+var sessionDB = new manager('http://admin:password@localhost:5984/', 'session');
+var userDB = new manager('http://admin:password@localhost:5984/', 'users');
+
 var Login = React.createClass({
 	getInitialState() {
     return {
@@ -30,27 +33,15 @@ var Login = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       text: "",
-      session: {
-        user: {
-          name: "",
-        }
-      },
     };
   },
 	componentWillMount() {
-    this.remoteURL = 'https://infinitelibrary:mitmedialab@infinitelibrary.cloudant.com/gitburg'
-    this.userDB = new manager('http://admin:password@localhost:5984/', 'users');
-    this.sessionDB = new manager('http://admin:password@localhost:5984/', 'session');
-    
-    // get the full list of users
 
-    this.userDB.createDatabase()
-      /*
-      .then((res) => {
-        this.userDB.replicate('users', this.remoteURL)
-      }) */
+    // lets get our users
+
+    userDB.createDatabase()
       .then((res) => {       
-        return this.userDB.getDesignDocument('_all_docs?include_docs=true')
+        return userDB.getDesignDocument('_all_docs?include_docs=true')
       })
       .then((res) => {
         this.setState({
@@ -61,47 +52,59 @@ var Login = React.createClass({
       .catch((ex) => {
         console.log(ex)
       });
-
-    this.sessionDB.createDatabase()
   },
 
   // if the input button is pressed
 
 	addUser() {
+
 		// create user
+    
     var date = new Date
     var dateString = date.toISOString()
     var userID = this.state.text + '-' + dateString
-    // update session
-    this.setState({
-      session: {
-        user: { 
-          name: this.state.text, 
-          _id: userID,
-          downloaded: [],
-        }
-      }
-    });
-    this.userDB.createDocument(this.state.session.user, userID);
+    var user = {
+      name: this.state.text, 
+      _id: userID,
+      downloaded: [],
+    }
+    
+    // create the user session
 
-    this.sessionDB.createDocument(this.state.session, "currentSession");
-    // move on
-    this.props.navigator.push({
-      name: 'catalog',
-    });
+    sessionDB.createDatabase
+      .then((res) => {
+        sessionDB.createDocument(user, "current")
+      });
+
+    // save the user
+
+    userDB.createDatabase
+      .then((res) => {
+        return userDB.createDocument(user, userID)
+      })
+      .then((res) => {
+        this.props.navigator.push({
+          name: 'catalog',          
+        });
+      });
+
   },
 
   // if a user is pressed
 
   selectUser(user) {
-  	// object state user object
-    this.setState({session: {"user": user}});
-    // update session
-    this.sessionDB.createDocument(this.state.session, "currentSession")
-    // move on
-    this.props.navigator.push({
-      name: 'catalog',
-    });
+ 
+    // create the user session
+
+    sessionDB.createDatabase
+      .then((res) => {
+        return sessionDB.createDocument(user, "current")
+      })
+      .then((res) => {
+        this.props.navigator.push({
+          name: 'catalog',          
+        });
+      });
 
   },
 
@@ -114,7 +117,7 @@ var Login = React.createClass({
     }
     var user = data.doc
     return (
-        <UserCell
+      <UserCell
         key= {user._id}
         onSelect={() => this.selectUser(user)}
         user={user}

@@ -20,6 +20,8 @@ var {
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password', (e) => {});
 
+var sessionDB = new manager('http://admin:password@localhost:5984/', 'session');
+var catalogDB = new manager('http://admin:password@localhost:5984/', 'catalog');
 
 var MyBooks = React.createClass({
   getInitialState() {
@@ -27,19 +29,34 @@ var MyBooks = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      user: {},
     };
   },
   componentDidMount() {
-    var myBooksDB = new manager('http://admin:password@localhost:5984/', 'mybooks');
-    myBooksDB.createDatabase()
-      .then((res) => {        
-        return myBooksDB.getDesignDocument('_all_docs?include_docs=true&attachments=true')
+    var books = [];
+    sessionDB.createDatabase()
+      .then((res) => {
+        return sessionDB.getDocument("current")
       })
       .then((res) => {
+        this.setState({user, res});
+      });
+      then((res) => {
+        return catalogDB.createDatabase()
+      })
+      .then((res) => {
+        return catalogDB.getDesignDocument('_all_docs?include_docs=true&attachments=true')
+      })
+      .then((res) => {
+        for (let id of this.state.user.downloads) {
+          catalogDB.getDocument(id)
+            .then((res) => {
+              books.push(res)
+            });
+        }
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(res.rows)
+          dataSource: this.state.dataSource.cloneWithRows(books)
         });
-        console.log(res.rows)
       })
       .catch((ex) => {
         console.log(ex)
