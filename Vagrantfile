@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
 
   # Use rsync to keep files on the host continually updated in the VM
   # This is required for live reload to work correctly
-  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
+  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/", rsync__args: ["--verbose", "--archive", "-z", "--copy-links"]
 
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
@@ -71,18 +71,17 @@ Vagrant.configure(2) do |config|
     ./configure
     make
     sudo make install
-    
-        
-    ### Below this point, run in the shared vagrant folder
-    cd /vagrant
-    
+
     ### Install React Native w/ dependencies
     sudo npm install -g react-native-cli
     sudo npm install -g flow
+    sudo npm install -g babel
     
+    ### Below this point, run in the shared vagrant folder
+    cd /vagrant
+
     ### Install packages
-    # Run with --no-bin-links to prevent errors on Windows when creating symlinks to a shared folder
-    sudo npm install --no-bin-links
+    sudo npm install
         
     ### Fix for https://github.com/xinthink/react-native-material-kit/issues/77
     cp node_modules/react-native-material-kit/android/build.gradle node_modules/react-native-material-kit/android/build.gradle.old
