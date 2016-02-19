@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react-native';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import * as sessionActions from '../actions/sessionActions';
 import { connect } from 'react-redux';
 

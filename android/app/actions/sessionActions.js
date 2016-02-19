@@ -1,13 +1,13 @@
 import * as types from './actionTypes';
 
-export function increment() {
+export function login() {
   return {
-    type: types.INCREMENT
+    type: types.LOGIN
   };
 }
 
-export function decrement() {
+export function logout() {
   return {
-    type: types.DECREMENT
+    type: types.LOGOUT
   };
 }
