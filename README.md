@@ -13,9 +13,10 @@ We at Infinite Library share the desire to create an open and excellent reading 
 2. Install [Vagrant]{https://www.vagrantup.com/docs/getting-started/)
 3. Install openssh and rsync using your operating system's package manager or installation tools - these are generally already installed on most Linux configurations.
 If in Windows:
-  1. Install [Cygwin](https://cygwin.com/install.html). Within the installer, choose the rsync and openssh packages as per https://github.com/mitchellh/vagrant/issues/3913#issuecomment-45761049. Also install git, under the "Devel" category, to allow cloning this repository.
+  1. Install [Cygwin](https://cygwin.com/install.html). Within the installer, choose the rsync and openssh packages as per https://github.com/mitchellh/vagrant/issues/3913#issuecomment-45761049. Install "git", under the "Devel" category, to allow cloning this repository. Install xorg-server and xinit to allow launching Chrome for debugging.
   2. If Vagrant issue https://github.com/mitchellh/vagrant/issues/6702 is not yet resolved, you will need to follow the instructions under https://github.com/mitchellh/vagrant/issues/6702#issuecomment-166503021
   3. Launch a terminal using the "Cygwin terminal" shortcut on your desktop or Start Menu.
+  4. Run "startxwin" to launch a local X server for Chrome.
 4. Clone this repository and change to the new folder.
 5. If using a physical device run:
 ```
@@ -33,12 +34,17 @@ vagrant rsync-auto &
 This will automatically sync changes from the host to the VM.
 7. Optionally, connect to the virtual machine and monitor the output of the react server:
 ```
-vagrant ssh
+vagrant ssh -- -Y
 tail -f /vagrant/react-native.log
 ```
 The infinite-reader should now be deployed to the phone or emulator. 
 Enable live reload using the "shake" gesture (<kbd>Ctrl</kbd>-m in Genymotion) and select "Enable Live Reload".
 Changes made to the code should automatically update on the device.
+To use the Chrome developer tools for debugging, start Chrome with:
+```
+google-chrome
+```
+Then connect to http://localhost:8081/debugger-ui with this Chrome instance and follow the instructions to install developer tools.
 
 ### Android Environment
 

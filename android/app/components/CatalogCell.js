@@ -1,6 +1,8 @@
 
 'use strict';
 
+var faker = require('faker');
+
 var React = require('react-native');
 var {
   Image,
@@ -20,7 +22,7 @@ var CatalogCell = React.createClass({
       TouchableElement = TouchableNativeFeedback;
     }
     var imageURI = 'data:image/jpeg;base64,' + this.props.book._attachments["cover.jpg"].data;
-    console.log(imageURI)
+    // console.log(imageURI)
     return (
     	<View>
 	      <TouchableElement
@@ -32,6 +34,7 @@ var CatalogCell = React.createClass({
 		          style={styles.thumbnail} />
 		        <View style={styles.rightContainer}>
 		          <Text style={styles.title}>{this.props.book.title}</Text>
+                  <Text style={styles.author}>{faker.name.findName() /*  TODO: Replace with real author once available in the db */ }</Text>
 		        </View>
 		      </View>
 		    </TouchableElement>
@@ -53,9 +56,15 @@ var styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    marginBottom: 8,
+    marginBottom: 4,
     textAlign: 'center',
   },
+  author: {
+    fontSize: 14,
+    marginBottom: 8,
+    textAlign: 'center',
+    color: "#C0C0C0"
+  },  
   year: {
     textAlign: 'center',
   },
