@@ -91,16 +91,26 @@ Vagrant.configure(2) do |config|
     sudo npm dedupe
     sudo echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-    # Enable the gradle daemon - needs to be under /root since the react-native server runs as root
+    # Enable the gradle daemon for root
     sudo mkdir ~/.gradle
     sudo touch ~/.gradle/gradle.properties && sudo echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
   SHELL
   
   # Note: below always runs when the "vagrant up" or "vagrant reload" is run
-  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  config.vm.provision "shell", run: "always", privileged: false, inline: <<-SHELL
     export ANDROID_HOME=/home/vagrant/android-sdk-linux
     export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
     export PATH=\$PATH:/home/vagrant/android-sdk-linux/tools:/home/vagrant/android-sdk-linux/platform-tools
+
+    # Enable the gradle daemon for user vagrant
+    if [ ! -e ~/.gradle ];
+    then
+            mkdir ~/.gradle
+    fi
+    if [ ! -e ~/.gradle/gradle.properties ];
+    then
+        touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties    
+    fi
 
     cd /vagrant
 
