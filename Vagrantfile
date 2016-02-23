@@ -111,14 +111,8 @@ Vagrant.configure(2) do |config|
     export PATH=\$PATH:/home/vagrant/android-sdk-linux/tools:/home/vagrant/android-sdk-linux/platform-tools
 
     # Enable the gradle daemon for user vagrant
-    if [ ! -e ~/.gradle ];
-    then
-            mkdir ~/.gradle
-    fi
-    if [ ! -e ~/.gradle/gradle.properties ];
-    then
-        touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties    
-    fi
+    [ -e ~/.gradle ] || mkdir ~/.gradle
+    [ -e ~/.gradle/gradle.properties ]  || echo "org.gradle.daemon=true" > ~/.gradle/gradle.properties
 
     cd /vagrant
 
