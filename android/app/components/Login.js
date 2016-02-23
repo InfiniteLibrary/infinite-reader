@@ -124,7 +124,7 @@ var Login = React.createClass({
           autoCapitalize="none"
           autoCorrect={false}
           autoFocus={false}
-          placeholder="Enter your Name"
+          placeholder="Enter your name"
           placeholderTextColor="rgba(255, 255, 255, 0.7)"
           onChangeText={(text) => this.setState({text})}
           value={this.state.text} />

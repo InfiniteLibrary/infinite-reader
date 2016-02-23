@@ -74,6 +74,11 @@ var Catalog = React.createClass({
         style={styles.catalogCell} />
     );
   },
+  renderSeparator(sectionID, rowID) {
+    return (
+        <View style={styles.separator} key={sectionID+rowID}/>
+    );
+  },  
   render() {
     var navigationView = (
       <Navigation 
@@ -99,6 +104,7 @@ var Catalog = React.createClass({
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
+          renderSeparator={this.renderSeparator}
           style={styles.listView} />
 
       </DrawerLayoutAndroid>
@@ -119,6 +125,10 @@ var styles = StyleSheet.create({
     backgroundColor: '#F44336',
     height: 56,
   },
+  separator: {
+    height: 2,
+    backgroundColor: '#FFFFFF'
+  },  
 });
 
 module.exports = Catalog;

@@ -12,10 +12,13 @@ We at Infinite Library share the desire to create an open and excellent reading 
 1. Connect an Android device with developer mode enabled OR install [Genymotion](https://www.genymotion.com/#!/download) and install a Nexus 5 or 7 (Android version 5.1). If using Genymotion, disable its ADB by selecting Settings -> ABD -> Use custom  Android SDK tools -> <blank>.
 2. Install [Vagrant]{https://www.vagrantup.com/docs/getting-started/)
 3. Install openssh and rsync using your operating system's package manager or installation tools - these are generally already installed on most Linux configurations.
-If in Windows:
-  1. Install [Cygwin](https://cygwin.com/install.html). Within the installer, choose the rsync and openssh packages as per https://github.com/mitchellh/vagrant/issues/3913#issuecomment-45761049. Also install git, under the "Devel" category, to allow cloning this repository.
+If on Windows:
+  1. Install [Cygwin](https://cygwin.com/install.html). Within the installer, choose the rsync and openssh packages as per https://github.com/mitchellh/vagrant/issues/3913#issuecomment-45761049. Install "git", under the "Devel" category, to allow cloning this repository. Install xorg-server and xinit to allow launching Chrome for debugging.
   2. If Vagrant issue https://github.com/mitchellh/vagrant/issues/6702 is not yet resolved, you will need to follow the instructions under https://github.com/mitchellh/vagrant/issues/6702#issuecomment-166503021
   3. Launch a terminal using the "Cygwin terminal" shortcut on your desktop or Start Menu.
+  4. Run "startxwin" to launch a local X server for Chrome.
+If on OS X:
+  1. Install [XQuartz](http://www.xquartz.org/) to enable viewing the developer console in Chrome within the VM.
 4. Clone this repository and change to the new folder.
 5. If using a physical device run:
 ```
@@ -33,12 +36,17 @@ vagrant rsync-auto &
 This will automatically sync changes from the host to the VM.
 7. Optionally, connect to the virtual machine and monitor the output of the react server:
 ```
-vagrant ssh
+vagrant ssh -- -Y
 tail -f /vagrant/react-native.log
 ```
 The infinite-reader should now be deployed to the phone or emulator. 
 Enable live reload using the "shake" gesture (<kbd>Ctrl</kbd>-m in Genymotion) and select "Enable Live Reload".
 Changes made to the code should automatically update on the device.
+To use the Chrome developer tools for debugging, start Chrome with:
+```
+google-chrome
+```
+Then connect to http://localhost:8081/debugger-ui with this Chrome instance and follow the instructions to install developer tools.
 
 ### Android Environment
 

@@ -25,6 +25,10 @@ Vagrant.configure(2) do |config|
   # This is required for live reload to work correctly
   config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/", rsync__args: ["--verbose", "--archive", "-z", "--copy-links"]
 
+  # Enable X11 forwarding for Chrome
+  config.ssh.forward_agent = true
+  config.ssh.forward_x11 = true
+  
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     # vb.gui = true
@@ -42,8 +46,12 @@ Vagrant.configure(2) do |config|
     ANDROID_SDK_FILENAME=android-sdk_r24.2-linux.tgz
     ANDROID_SDK=http://dl.google.com/android/$ANDROID_SDK_FILENAME
 
+    # Enable Google repository for downloading chrome needed for developer console
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+    sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+
     apt-get update
-    apt-get install -y npm git openjdk-7-jdk ant expect lib32stdc++6 lib32z1 xterm automake autoconf python-dev
+    apt-get install -y npm git openjdk-7-jdk ant expect lib32stdc++6 lib32z1 xterm automake autoconf python-dev google-chrome-stable
     npm install -g n
     n stable
 
@@ -91,16 +99,20 @@ Vagrant.configure(2) do |config|
     sudo npm dedupe
     sudo echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-    # Enable the gradle daemon - needs to be under /root since the react-native server runs as root
+    # Enable the gradle daemon for root
     sudo mkdir ~/.gradle
     sudo touch ~/.gradle/gradle.properties && sudo echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
   SHELL
   
   # Note: below always runs when the "vagrant up" or "vagrant reload" is run
-  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  config.vm.provision "shell", run: "always", privileged: false, inline: <<-SHELL
     export ANDROID_HOME=/home/vagrant/android-sdk-linux
     export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
     export PATH=\$PATH:/home/vagrant/android-sdk-linux/tools:/home/vagrant/android-sdk-linux/platform-tools
+
+    # Enable the gradle daemon for user vagrant
+    [ -e ~/.gradle ] || mkdir ~/.gradle
+    [ -e ~/.gradle/gradle.properties ]  || echo "org.gradle.daemon=true" > ~/.gradle/gradle.properties
 
     cd /vagrant
 
