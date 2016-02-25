@@ -102,6 +102,9 @@ Vagrant.configure(2) do |config|
     # Enable the gradle daemon for root
     sudo mkdir ~/.gradle
     sudo touch ~/.gradle/gradle.properties && sudo echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+    
+    # Ensure that user vagrant owns everything in /vagrant
+    chown -R vagrant *
   SHELL
   
   # Note: below always runs when the "vagrant up" or "vagrant reload" is run
