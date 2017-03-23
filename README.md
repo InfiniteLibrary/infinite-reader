@@ -50,7 +50,8 @@ google-chrome
 ```
 Then connect to http://localhost:8081/debugger-ui with this Chrome instance and follow the instructions to install developer tools.
 
-### Android Environment  ONLY NEEDED IF YOU AREN'T USING VAGRANT!!!
+## --- The rest is only if you are NOT using Vagrant! ---
+### Android Environment  
 
 Setting up an Android development environment takes a few steps. Once you get set up, you will see how easy it is to develop Android apps with Javascript. The app looks and feels, and is, in more ways that not, a true native app.
 
